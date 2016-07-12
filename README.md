@@ -1,4 +1,4 @@
-# Bank kata [![Build Status](https://travis-ci.org/moifort/Bank.svg?branch=master)](https://travis-ci.org/moifort/Bank) [![Coverage Status (only domain module)](https://coveralls.io/repos/github/moifort/Bank/badge.svg?branch=master)](https://coveralls.io/github/moifort/Bank?branch=master) 
+# Bank kata [![Build Status](https://travis-ci.org/moifort/Bank.svg?branch=master)](https://travis-ci.org/moifort/Bank) [![Coverage Status](https://coveralls.io/repos/github/moifort/Bank/badge.svg?branch=master)](https://coveralls.io/github/moifort/Bank?branch=master)
 
 ```bash
 Feature: Withdraw from account
