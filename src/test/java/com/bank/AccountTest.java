@@ -1,32 +1,28 @@
 package com.bank;
 
-
-import com.bank.core.BankServiceImpl;
+import com.bank.core.AccountImpl;
+import com.bank.core.ClientImpl;
 import com.bank.exception.CurrencyException;
-import com.bank.support.MockAccountRepository;
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class BankServiceTest {
+public class AccountTest {
 
-    private BankService bankService;
-    private MockAccountRepository accountRepository;
+    private Account account;
+
 
     @Before
     public void setUp() throws Exception {
-        accountRepository = new MockAccountRepository();
-        bankService = new BankServiceImpl(accountRepository);
+        Client client = new ClientImpl("1", "pierre-jean");
+        account = new AccountImpl("1", client, 100, Currency.EUR);
     }
 
     @Test
     public void testWithdraw10EURFrom100EURAccountShouldReturnAccountWith90EURBalance() throws Exception {
-        // Given
-        Account account = accountRepository.saveNewAccount("Thibaut", 100, Currency.EUR);
-
         // When
-        bankService.withdraw(account.getId(), 10, Currency.EUR);
+        account.withdraw(10, Currency.EUR);
 
         // Then
         assertThat(account.getBalanceMoney()).isEqualTo(90);
@@ -36,11 +32,8 @@ public class BankServiceTest {
     // TODO: See with PO how to manage this case
     @Test
     public void testWithdraw110EURFrom100EURAccountShouldReturnAccountWithMinus10EURBalance() throws Exception {
-        // Given
-        Account account = accountRepository.saveNewAccount("Thibaut", 100, Currency.EUR);
-
         // When
-        bankService.withdraw(account.getId(), 110, Currency.EUR);
+        account.withdraw(110, Currency.EUR);
 
         // Then
         assertThat(account.getBalanceMoney()).isEqualTo(-10);
@@ -50,11 +43,8 @@ public class BankServiceTest {
     // TODO: See with PO how to manage this case
     @Test
     public void testWithdraw0EURFrom100EURAccountShouldReturnAccountWith100EURBalance() throws Exception {
-        // Given
-        Account account = accountRepository.saveNewAccount("Thibaut", 100, Currency.EUR);
-
         // When
-        bankService.withdraw(account.getId(), 0, Currency.EUR);
+        account.withdraw(0, Currency.EUR);
 
         // Then
         assertThat(account.getBalanceMoney()).isEqualTo(100);
@@ -64,13 +54,11 @@ public class BankServiceTest {
     // TODO: See with PO how to manage this case
     @Test(expected = CurrencyException.class)
     public void testWithdraw10USDFrom100EURAccountShouldReturnCurrencyException() {
-        // Given
-        Account account = accountRepository.saveNewAccount("Thibaut", 100, Currency.EUR);
-
         // When
-        bankService.withdraw(account.getId(), 0, Currency.USD);
+        account.withdraw(0, Currency.USD);
 
         // Then
         // Currency exception
     }
+
 }
